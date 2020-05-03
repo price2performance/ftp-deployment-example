@@ -1,0 +1,14 @@
+{
+    "require-dev": {
+        "nette/tester": "^2.3"
+    },
+    "require": {
+        "nette/bootstrap": "^3.0",
+        "nette/application": "^3.0",
+        "latte/latte": "^2.8",
+        "tracy/tracy": "^2.7"
+    },
+    "autoload": {
+		"classmap": ["app/Bootstrap.php"]
+	}
+}

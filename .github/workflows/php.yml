@@ -1,0 +1,60 @@
+name: Test & Deploy
+
+on: [push]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['7.1', '7.2', '7.3', '7.4']
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup PHP ${{ matrix.php-version }}
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: ${{ matrix.php-version }}
+
+    - name: Check PHP Version
+      run: php -v
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies
+      run: composer install --no-progress --no-suggest
+
+    - name: Run test suite
+      run: vendor/bin/tester tests -C
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup PHP 7.4
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: '7.4'
+
+    - name: Check PHP Version
+      run: php -v
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Install dependencies without require-dev
+      run: composer install --no-progress --no-suggest --no-dev
+
+    - name: Deploy
+      uses: price2performance/ftp-deployment-action@master
+      with:
+        config_file: ./deployment.ini
+        env:
+          SECRET_USER: ${{ secrets.SFTP_USER }}
+          SECRET_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+          SECRET_HOST: ${{ secrets.SFTP_HOST }}
+          SECRET_DIR: ${{ secrets.SFTP_DIR }}
