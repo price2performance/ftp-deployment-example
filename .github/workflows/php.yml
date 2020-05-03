@@ -53,8 +53,8 @@ jobs:
       uses: price2performance/ftp-deployment-action@master
       with:
         config_file: ./deployment.ini
-        env:
-          SECRET_USER: ${{ secrets.SFTP_USER }}
-          SECRET_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
-          SECRET_HOST: ${{ secrets.SFTP_HOST }}
-          SECRET_DIR: ${{ secrets.SFTP_DIR }}
+      env:
+        SECRET_USER: ${{ secrets.SFTP_USER }}
+        SECRET_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+        SECRET_HOST: ${{ secrets.SFTP_HOST }}
+        SECRET_DIR: ${{ secrets.SFTP_DIR }}
