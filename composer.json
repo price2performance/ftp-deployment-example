@@ -1,4 +1,7 @@
 {
+    "name": "price2performance/ftp-deployment-example",
+    "description": "Example of using price2performance/ftp-deployment-action",
+    "license": ["MIT", "BSD-3-Clause"],
     "require-dev": {
         "nette/tester": "^2.3"
     },
