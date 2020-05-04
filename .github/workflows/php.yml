@@ -49,7 +49,18 @@ jobs:
     - name: Install dependencies without require-dev
       run: composer install --no-progress --no-suggest --no-dev
 
-    - name: Deploy
+    - name: Run deployment in test mode
+      uses: price2performance/ftp-deployment-action@master
+      with:
+        config_file: ./deployment.ini
+        parameters: -t
+      env:
+        SECRET_USER: ${{ secrets.SFTP_USER }}
+        SECRET_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+        SECRET_HOST: ${{ secrets.SFTP_HOST }}
+        SECRET_DIR: ${{ secrets.SFTP_DIR }}
+
+    - name: Deploy to server via SFTP
       uses: price2performance/ftp-deployment-action@master
       with:
         config_file: ./deployment.ini
