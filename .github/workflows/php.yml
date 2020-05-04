@@ -50,7 +50,7 @@ jobs:
       run: composer install --no-progress --no-suggest --no-dev
 
     - name: Run deployment in test mode
-      uses: price2performance/ftp-deployment-action@master
+      uses: docker://price2performance/ftp-deployment
       with:
         config_file: ./deployment.ini
         parameters: -t
@@ -61,7 +61,7 @@ jobs:
         SECRET_DIR: ${{ secrets.SFTP_DIR }}
 
     - name: Deploy to server via SFTP
-      uses: price2performance/ftp-deployment-action@master
+      uses: docker://price2performance/ftp-deployment
       with:
         config_file: ./deployment.ini
       env:
